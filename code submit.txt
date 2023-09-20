@@ -1,0 +1,31 @@
+<?php
+
+$eml = $_POST['email'];
+$psw=$_POST['psw'];
+echo "test";
+echo $eml;
+echo $psw;
+
+$servername = "database-1.c4y2x4z72gki.ap-south-1.rds.amazonaws.com";
+$username = "admin";
+$password = "Pass1234";
+$dbname = "facebook";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "INSERT INTO posts (email, password)
+VALUES ('$eml','$psw')";
+
+if ($conn->query($sql) === TRUE) {
+  echo "New record created successfully";
+} else {
+  echo "Error: " . $sql . "<br>" . $conn->error;
+}
+
+$conn->close();
+?> 
