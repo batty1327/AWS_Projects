@@ -8,7 +8,13 @@ Build a robust, secure, and scalable cloud-based image repository project using 
 
 ## Tech Stack
 
-**AWS:** EC2, S3, RDS
+**AWS** 
+
+EC2 instance (t2.micro)
+
+S3 bucket
+
+RDS (db.t3.micro)
 
 
 
@@ -18,7 +24,7 @@ Build a robust, secure, and scalable cloud-based image repository project using 
 Launch an AWS EC2 Instance with Amazon linux 2023.
 
 LEMP Stack is used for this project. (LEMP stands for Linux, Nginx, MySQL, PHP.)
-1) Install Nginx using these commands.
+1) Install Nginx (web server) using these commands.
 ```bash
 sudo dnf update //To Install Latest Update
 sudo dnf list | grep nginx
@@ -52,12 +58,83 @@ sudo systemctl start php-fpm
 sudo systemctl status php-fpm
 sudo systemctl enable php-fpm
 ```
-4) Restart all the services.
+4) Install php-mysqlnd (extension to connect EC2 with RDS)
+
+```bash
+sudo dnf install php-mysqlnd -y
+```
+5) Restart all the services.
 ```bash
 sudo systemctl restart nginx.service
 sudo systemctl restart php-fpm.service
 sudo systemctl restart mariadb.service
 ```
+## Deployment
+
+To deploy this project install LEMP stack on Amazon Linux 2023.
+
+After restarting all the services, go to nginx html directory
+
+
+```bash
+cd /usr/share/nginx/html
+```
+
+Create index.php and submit.php
+```bash
+vim index.php
+vim submit.php
+```
+
+Copy the content from files and paste in your files. Do change the following accordingly
+```bash
+server name = "RDS Endpoint"
+user name = "Admin"
+password = "Admin1234"
+dbname = "RDS Name"
+```
+
+Now, login to your RDS database in EC2 
+```bash
+sudo mysql -h "RDS Endpoint" -p 3306 -u admin -p
+```
+
+After login, create a database and table.
+```bash
+create database "database name";
+use database "database name";
+create table users (id int not null auto_increament, email varchar (200), password varchar (200));
+exit
+```
+
+Now copy your public IP and paste it in browser
+
+Enter details and data will be saved in RDS database.
+
+To check login to RDS database and use command "select * from users;"
+to retrieve data from table.
+
+Now, create a file upload.php
+```bash
+vim upload.php
+```
+
+Copy and paste the content in upload.php
+
+Also create a directory "uploads" and change its permission 
+```bash
+sudo chmod -r +777 uploads
+```
+
+Copy your public IP and paste it in your browser
+```bash
+http://publicip/uploads.php
+```
+
+Upload image and check the uploads diectory.
+
+
 ## Feedback
 
 If you have any feedback, please reach out to me at sumitbattul243@gmail.com
+
