@@ -151,7 +151,7 @@ Get Access Key and secret key from your account's Security Credentials.
 Get bucket name from S3. (Make sure bucket is created with ACL-enabled Settings)
 
 Now open below URL in browser
-http://your IP address/fileadd.html
+http://yourIPaddress/fileadd.html
 now click on "browse" button and select any one image and click on "upload"
 
 Now it must show image uploaded successfully and also need to show you S3 URL for your image
