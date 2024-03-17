@@ -114,25 +114,49 @@ Enter details and data will be saved in RDS database.
 To check login to RDS database and use command "select * from users;"
 to retrieve data from table.
 
-Now, create a file upload.php
+Create a directory named "uploads" in the HTML folder.
 ```bash
-vim upload.php
+sudo mkdir uploads
 ```
 
-Copy and paste the content in upload.php
-
-Also create a directory "uploads" and change its permission 
+Assign write permissions to the "uploads" directory.
 ```bash
-sudo chmod -r +777 uploads
+sudo chmod -R 777 uploads
 ```
 
-Copy your public IP and paste it in your browser
+Create a bucket in Amazon S3 with ACL-enabled settings. Remove any block-all settings on the bucket (i.e., make it public-read).
+
+Create a file named "fileadd.html" in the HTML folder.
+
+Add the HTML code to the "fileadd.html" file:
+<!DOCTYPE html>
+
+Run the following commands step by step in the HTML folder:
 ```bash
-http://publicip/uploads.php
+sudo php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+sudo php -r "if (hash_file('sha384', 'composer-setup.php') === '55ce33d7678c5a611085589f1f3ddf8b3c52d662cd01d4ba75c0ee0459970c2200a51f492d557530c71c15d8dba01eae') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+sudo php composer-setup.php
+sudo php -r "unlink('composer-setup.php');"
+sudo php composer.phar require aws/aws-sdk-php
+   
+# Note: If you encounter any errors, you can move composer.phar to /usr/local/bin/composer with this command.
 ```
 
-Upload image and check the uploads diectory.
+Create a file named "ups3.php" in the HTML folder.
 
+Add the PHP code to the "ups3.php" file:
+
+Replace all *** values with your values.
+Get Access Key and secret key from your account's Security Credentials.
+Get bucket name from S3. (Make sure bucket is created with ACL-enabled Settings)
+
+Now open below URL in browser
+http://your IP address/fileadd.html
+now click on "browse" button and select any one image and click on "upload"
+
+Now it must show image uploaded successfully and also need to show you S3 URL for your image
+
+Go to uploads folder in html folder and check that image also uploaded here
 
 ## Feedback
 
